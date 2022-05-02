@@ -6,16 +6,23 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataService } from './core/services/db/data.service';
+import { OwnersComponent } from './core/components/owners/owners.component';
+import { NgxsModule } from '@ngxs/store';
+import { UserState } from './core/core/user.state';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OwnersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientInMemoryWebApiModule.forRoot(DataService),
     HttpClientModule,
+    NgxsModule.forRoot([
+      UserState,
+    ], {developmentMode: true}),
   ],
   providers: [],
   bootstrap: [AppComponent]
