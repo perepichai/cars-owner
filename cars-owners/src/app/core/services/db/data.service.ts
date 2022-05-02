@@ -12,4 +12,10 @@ export class DataService implements InMemoryDbService {
       owners: []
     };
   }
+  genId<T extends { id: any }>(collection: T[], collectionName: string): any {
+    return collection.reduce((prev, curr) =>
+    {
+        return (curr.id + 1) || 0;
+    }, 1);
+}
 }
