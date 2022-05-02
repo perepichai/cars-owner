@@ -1,0 +1,9 @@
+<p *ngFor="let owner of owners">
+    {{owner.id}} {{owner.firstName}} {{owner.lastName}}
+</p>
+<button type="button" (click)="create()">create</button>
+{{(owners)?.length }}
+<!-- <div>
+<button type="button" (click)="get()">get</button>
+{{  (owner$ | async)?.id }}
+</div> -->
