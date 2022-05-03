@@ -11,6 +11,7 @@ import { NgxsModule } from '@ngxs/store';
 import { UserState } from './core/core/user.state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SharedModule } from './shared/shared.module';
     ], {developmentMode: true}),
     BrowserAnimationsModule,
     SharedModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
