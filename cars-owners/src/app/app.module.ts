@@ -10,6 +10,7 @@ import { OwnersComponent } from './core/components/owners/owners.component';
 import { NgxsModule } from '@ngxs/store';
 import { UserState } from './core/core/user.state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       UserState,
     ], {developmentMode: true}),
     BrowserAnimationsModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
