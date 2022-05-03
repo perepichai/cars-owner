@@ -9,6 +9,7 @@ import { DataService } from './core/services/db/data.service';
 import { OwnersComponent } from './core/components/owners/owners.component';
 import { NgxsModule } from '@ngxs/store';
 import { UserState } from './core/core/user.state';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UserState } from './core/core/user.state';
     NgxsModule.forRoot([
       UserState,
     ], {developmentMode: true}),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
