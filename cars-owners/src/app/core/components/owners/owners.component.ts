@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { TableOwnerColumns } from 'src/app/shared/enum/table-columns';
 import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
-import { CreateOwner, GetOwnerById, GetOwners } from '../../core/user.actions';
-import { UserState } from '../../core/user.state';
+import { CreateOwner, GetOwnerById, GetOwners } from '../../store/user.actions';
+import { UserState } from '../../store/user.state';
 
 @Component({
   selector: 'app-owners',
@@ -25,6 +26,7 @@ export class OwnersComponent implements OnInit {
     cars: []
   };
   destroy$: Subject<boolean> = new Subject<boolean>();
+  columns!: TableOwnerColumns[];
 
   constructor(private store: Store) { }
 
@@ -33,6 +35,8 @@ export class OwnersComponent implements OnInit {
       takeUntil(this.destroy$)
     ).subscribe((owners: OwnerEntity[]) => this.owners = owners);
     this.store.dispatch(new GetOwners());
+
+    this.columns = Object.values(TableOwnerColumns);
   }
   onCreate(): void {
     this.store.dispatch(new CreateOwner('Test 2', this.owner.firstName, this.owner.middleName, this.owner.cars));

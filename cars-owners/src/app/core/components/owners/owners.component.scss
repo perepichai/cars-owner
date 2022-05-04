@@ -1,12 +1,4 @@
-.wrapper {
-    background-color:#ddd;
-    height :100%;
-}
-
-.left, .center, .right {
-    // text-align:center
-margin: auto;
-}
+@import "src/app/shared/styles/buttons.scss";
 
 .button {
     margin: 6px;

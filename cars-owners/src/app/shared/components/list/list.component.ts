@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { TableColumns, TableColumnsReverse } from 'src/app/shared/enum/table-columns';
+import { TableCarColumns, TableColumnsReverse } from 'src/app/shared/enum/table-columns';
 import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
 
 @Component({
@@ -11,14 +11,15 @@ import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
 })
 export class ListComponent implements OnInit {
 
-  @Input() entities: {}[] | undefined;
+  @Input() entities: object[] | undefined;
+  @Input() columns!: string[];
   @Output() selectedRowId = new EventEmitter<number>();
 
   displayedColumns: string[] = [];
   columnsToDisplay: string[] = [];
   dataSource = new MatTableDataSource([{}]);
   tableColumnsReverse = TableColumnsReverse;
-  tableColumns = TableColumns;
+  tableColumns = TableCarColumns;
   selection = new SelectionModel<any>(false, []);
   
 
@@ -37,8 +38,8 @@ export class ListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.displayedColumns = Object.values(TableColumnsReverse);
-    this.columnsToDisplay = Object.values(TableColumns).slice();
+    this.displayedColumns = this.columns;
+    this.columnsToDisplay = this.displayedColumns.slice();
     this.dataSource = new MatTableDataSource(this.entities);
   }
 

@@ -1,0 +1,53 @@
+<div class="create-form">
+    <div class="wrapper application-wrapper">
+        <h2>Владелец</h2>
+        <div class="card-border">
+            <form [formGroup]="OwnerFormGroup" fxLayout='row' fxLayoutAlign='start space-between' class="step">
+                <div><label class="step-label"> Имя <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="firstName">
+                    </mat-form-field>
+                </div>
+                <div><label class="step-label"> Фамилия <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="lastName">
+                    </mat-form-field>
+                </div>
+                <div><label class="step-label"> Отчество <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="middleName">
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <h2>Автомобили</h2>
+        <app-list (selectedRowId)='onSelect($event)' [entities]="cars" [columns]="columns"></app-list>
+        <div class="card-border">
+            <form [formGroup]="CarsFormGroup" fxLayout='row' fxLayoutAlign='start space-between' class="step">
+                <div><label class="step-label"> Номер <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="number">
+                    </mat-form-field>
+                </div>
+                <div><label class="step-label"> Марка <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="manufacturer">
+                    </mat-form-field>
+                </div>
+                <div><label class="step-label"> Модель <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="model">
+                    </mat-form-field>
+                </div>
+                <div><label class="step-label"> Год <span class="step-required">*</span></label>
+                    <mat-form-field>
+                        <input matInput class="step-input" type="text" formControlName="productionYear">
+                    </mat-form-field>
+                </div>
+            </form>
+            <button mat-raised-button  class="btn button" routerLinkActive="active" [disabled]="true">
+				Добавить
+			</button>
+        </div>
+    </div>
+</div>
