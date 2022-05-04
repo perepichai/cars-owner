@@ -2,11 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from './modules/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListComponent } from './components/owners/list/list.component';
+import { TranslatePipe } from './pipes/translate.pipe';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ListComponent,
+    TranslatePipe
+  ],
   imports: [
     CommonModule,
     MaterialModule,
@@ -18,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    ListComponent
   ]
 })
 export class SharedModule { }

@@ -16,6 +16,8 @@ export class OwnersComponent implements OnInit {
   owners: OwnerEntity[] = [];
   @Select(UserState.owners)
   owner$!: Observable<OwnerEntity>;
+  ownerId!: number;
+  isDisabled: boolean = true;
   owner: OwnerEntity = {
     firstName: 'Test',
     middleName: 'Test',
@@ -32,8 +34,19 @@ export class OwnersComponent implements OnInit {
     ).subscribe((owners: OwnerEntity[]) => this.owners = owners);
     this.store.dispatch(new GetOwners());
   }
-  create(): void {
+  onCreate(): void {
     this.store.dispatch(new CreateOwner('Test 2', this.owner.firstName, this.owner.middleName, this.owner.cars));
+  }
+  onEdit(): void {
+    console.log('edit')
+  }
+  onRemove(): void {
+    console.log('remove')
+  }
+  onSelect(id: number): void {
+    this.isDisabled = false;
+    this.ownerId = id;
+    console.log('asdads ' + this.ownerId)
   }
   get(): void {
     this.store.dispatch(new GetOwnerById(1));
