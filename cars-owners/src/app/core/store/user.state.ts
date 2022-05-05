@@ -19,6 +19,7 @@ export interface UserStateModel {
       middleName: '',
       lastName: '',
       cars: [],
+      carsQuantity: 0
     },
   },
 })
@@ -73,4 +74,5 @@ export class UserState {
         })
       );
   }
+
 }

@@ -1,33 +1,19 @@
-// export enum TableColumns {
-//     firstName = 'Имя',
-//     middleName = 'Отчество',
-//     lastName = 'Фамилия',
-//     cars = 'Количество машин',
-// }
-
-// export enum TableColumns {
-//     'firstName' = 'Имя',
-//     'middleName' = 'Отчество',
-//     'lastName' = 'Фамилия',
-//     'cars' = 'Количество машин',
-// }
-
 export enum TableOwnerColumns {
     firstName = 'firstName',
     middleName = 'middleName',
     lastName = 'lastName',
-    cars = 'cars',
+    carsQuantity = 'carsQuantity'
 }
 
 export enum TableColumnsTranslate {
     'firstName' = 'Имя',
     'middleName' = 'Отчество',
     'lastName' = 'Фамилия',
-    'cars' = 'Количество машин',
     'number' = 'Номер',
     'model' = 'Модель',
     'manufacturer' = 'Марка',
-    'productionYear' = 'Год'
+    'productionYear' = 'Год',
+    'carsQuantity' = 'Количество автомобилей'
 
 }
 

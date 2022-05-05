@@ -17,3 +17,13 @@ export class CreateOwner {
     public cars: CarEntity[]
   ) {}
 }
+
+export class CreateCar {
+  static readonly type = '[car] create car';
+  constructor(
+    public number: string,
+    public model: string,
+    public manufacturer: string,
+    public productionYear: string
+  ) {}
+}

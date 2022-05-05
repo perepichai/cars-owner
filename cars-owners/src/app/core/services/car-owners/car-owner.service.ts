@@ -15,7 +15,8 @@ export class CarOwnerService implements ICarOwnersService {
     firstName: '',
     middleName: '',
     lastName: '',
-    cars: []
+    cars: [],
+    carsQuantity: 0
   };
 
   constructor(private http: HttpClient) { }
@@ -42,6 +43,7 @@ export class CarOwnerService implements ICarOwnersService {
     this.owner.firstName = aFirstName;
     this.owner.middleName = aMiddleName;
     this.owner.cars = aCars;
+    this.owner.carsQuantity = aCars.length;
 
     return this.http.post<OwnerEntity>(this.ownersUrl, this.owner).pipe(
       catchError((error: HttpErrorResponse) => {

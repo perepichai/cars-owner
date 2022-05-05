@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { TableOwnerColumns } from 'src/app/shared/enum/table-columns';
 import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
-import { CreateOwner, GetOwnerById, GetOwners } from '../../store/user.actions';
+import { GetOwnerById, GetOwners } from '../../store/user.actions';
 import { UserState } from '../../store/user.state';
 
 @Component({
@@ -14,19 +14,14 @@ import { UserState } from '../../store/user.state';
 export class OwnersComponent implements OnInit {
   @Select(UserState.owners)
   owners$!: Observable<OwnerEntity[]>;
-  owners: OwnerEntity[] = [];
+  owners!: OwnerEntity[];
   @Select(UserState.owners)
   owner$!: Observable<OwnerEntity>;
   ownerId!: number;
   isDisabled: boolean = true;
-  owner: OwnerEntity = {
-    firstName: 'Test',
-    middleName: 'Test',
-    lastName: 'Testovych',
-    cars: []
-  };
   destroy$: Subject<boolean> = new Subject<boolean>();
   columns!: TableOwnerColumns[];
+  test!: OwnerEntity[];
 
   constructor(private store: Store) { }
 
@@ -35,12 +30,9 @@ export class OwnersComponent implements OnInit {
       takeUntil(this.destroy$)
     ).subscribe((owners: OwnerEntity[]) => this.owners = owners);
     this.store.dispatch(new GetOwners());
-
     this.columns = Object.values(TableOwnerColumns);
   }
-  onCreate(): void {
-    this.store.dispatch(new CreateOwner('Test 2', this.owner.firstName, this.owner.middleName, this.owner.cars));
-  }
+
   onEdit(): void {
     console.log('edit')
   }

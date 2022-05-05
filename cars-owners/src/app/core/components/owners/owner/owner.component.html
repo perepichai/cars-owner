@@ -2,64 +2,84 @@
     <div class="wrapper application-wrapper">
         <h2>Владелец</h2>
         <div class="card-border">
-            <form [formGroup]="OwnerFormGroup" fxLayout='row' fxLayoutAlign='start space-between' class="step">
-                <div><label class="step-label"> Имя <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="firstName">
-                    </mat-form-field>
+            <form [formGroup]="OwnerFormGroup" fxLayout='column' fxLayoutAlign='start space-between' class="step">
+                <div fxLayout='row' class="inputs">
+                    <div><label class="step-label"> Имя <span class="step-required">*</span></label>
+                        <mat-form-field>
+                            <input matInput class="step-input" type="text" formControlName="firstName">
+                        </mat-form-field>
+                    </div>
+                    <div><label class="step-label"> Фамилия <span class="step-required">*</span></label>
+                        <mat-form-field>
+                            <input matInput class="step-input" type="text" formControlName="lastName">
+                        </mat-form-field>
+                    </div>
+                    <div><label class="step-label"> Отчество <span class="step-required">*</span></label>
+                        <mat-form-field>
+                            <input matInput class="step-input" type="text" formControlName="middleName">
+                        </mat-form-field>
+                    </div>
                 </div>
-                <div><label class="step-label"> Фамилия <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="lastName">
-                    </mat-form-field>
-                </div>
-                <div><label class="step-label"> Отчество <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="middleName">
-                    </mat-form-field>
-                </div>
-            </form>
-        </div>
-        <h2>Автомобили</h2>
-        <app-list (selectedRowId)='onSelect($event)' [entities]="cars" [columns]="columns"></app-list>
-        <div class="card-border">
-            <form [formGroup]="CarsFormGroup" fxLayout='row' fxLayoutAlign='start space-between' class="step">
-                <div><label class="step-label"> Номер <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="number">
-                    </mat-form-field>
-                </div>
-                <div><label class="step-label"> Марка <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="manufacturer">
-                    </mat-form-field>
-                </div>
-                <div><label class="step-label"> Модель <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="model">
-                    </mat-form-field>
-                </div>
-                <div><label class="step-label"> Год <span class="step-required">*</span></label>
-                    <mat-form-field>
-                        <input matInput class="step-input" type="text" formControlName="productionYear">
-                    </mat-form-field>
-                </div>
-            </form>
-            <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-section">
-                <button mat-raised-button class="btn button" routerLinkActive="active" [disabled]="true">
-                    Добавить автомобиль
-                </button>
-            </div>
-            <mat-divider></mat-divider>
-            <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
-                <button mat-raised-button class="btn button" routerLinkActive="active" [disabled]="true">
-                    Сохранить
-                </button>
-                <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active">
-                    Назад
-                </button>
-            </div>
+                <mat-divider></mat-divider>
+                <h2>Автомобили</h2>
+                <ng-container formArrayName="cars">
+                    <div *ngFor="let _ of cars.controls; index as i">
 
+                        <ng-container [formGroupName]="i">
+                            <div class="inputs" fxLayout='row'>
+                                <div><label class="step-label"> Номер <span class="step-required">*</span></label>
+                                    <mat-form-field>
+                                        <input matInput class="step-input" type="text" formControlName="number"
+                                            placeholder="AX1111HP">
+                                    </mat-form-field>
+                                    <mat-error
+                                        *ngIf="cars.controls[i].get('number')?.hasError('pattern') && cars.controls[i].get('number')?.touched">
+                                        <span class="info-message">Введите номер в формате AX1111HP</span>
+                                    </mat-error>
+                                </div>
+                                <div><label class="step-label"> Марка <span class="step-required">*</span></label>
+                                    <mat-form-field>
+                                        <input matInput class="step-input" type="text" formControlName="manufacturer" placeholder="Hyundai">
+                                    </mat-form-field>
+                                </div>
+                                <div><label class="step-label"> Модель <span class="step-required">*</span></label>
+                                    <mat-form-field>
+                                        <input matInput class="step-input" type="text" formControlName="model" placeholder="Accent">
+                                    </mat-form-field>
+                                </div>
+                                <div><label class="step-label"> Год <span class="step-required">*</span></label>
+                                    <mat-form-field>
+                                        <input matInput class="step-input" type="number" formControlName="productionYear" placeholder="2009">
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <button class="del-button" (click)="onRemove(i)"><mat-icon>delete_forever</mat-icon></button>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </div>
+                </ng-container>
+
+            </form>
         </div>
+
+        <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-section">
+            <button mat-raised-button class="btn button" routerLinkActive="active" [disabled]="false"
+                (click)="onAddCar()">
+                Добавить автомобиль
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
+            <button mat-raised-button class="btn button" [routerLink]="''" routerLinkActive="active"
+                [disabled]="!(OwnerFormGroup.valid && cars.length)" (click)="onCreate()">
+                Сохранить
+            </button>
+            <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active">
+                Назад
+            </button>
+        </div>
+
     </div>
 </div>
