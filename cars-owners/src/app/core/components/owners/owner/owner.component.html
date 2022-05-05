@@ -45,9 +45,21 @@
                     </mat-form-field>
                 </div>
             </form>
-            <button mat-raised-button  class="btn button" routerLinkActive="active" [disabled]="true">
-				Добавить
-			</button>
+            <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-section">
+                <button mat-raised-button class="btn button" routerLinkActive="active" [disabled]="true">
+                    Добавить автомобиль
+                </button>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
+                <button mat-raised-button class="btn button" routerLinkActive="active" [disabled]="true">
+                    Сохранить
+                </button>
+                <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active">
+                    Назад
+                </button>
+            </div>
+
         </div>
     </div>
 </div>
