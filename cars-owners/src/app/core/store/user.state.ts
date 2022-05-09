@@ -3,11 +3,12 @@ import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { CarOwnerService } from '../services/car-owners/car-owner.service';
 import { Observable, tap } from 'rxjs';
-import { CreateOwner, GetOwnerById, GetOwners } from './user.actions';
+import { ActivateEditMode, CreateOwner, GetOwnerById, GetOwners } from './user.actions';
 
 export interface UserStateModel {
   owners: OwnerEntity[];
-  owner: OwnerEntity
+  owner: OwnerEntity,
+  isEditMode: boolean
 }
 
 @State<UserStateModel>({
@@ -19,8 +20,9 @@ export interface UserStateModel {
       middleName: '',
       lastName: '',
       cars: [],
-      carsQuantity: 0
+      carsQuantity: 0,
     },
+    isEditMode: false
   },
 })
 @Injectable()
@@ -32,6 +34,10 @@ export class UserState {
   @Selector()
   static owner(state: UserStateModel): OwnerEntity {
     return state.owner;
+  }
+  @Selector()
+  static isEditMode(state: UserStateModel): boolean {
+    return state.isEditMode;
   }
 
   constructor(private carOwnerService: CarOwnerService) {}
@@ -73,6 +79,11 @@ export class UserState {
           return patchState({ owner: owner });
         })
       );
+  }
+
+  @Action(ActivateEditMode)
+  activateEditMode({ patchState }: StateContext<UserStateModel>, { payload }: ActivateEditMode): void {
+    patchState({ isEditMode: payload });
   }
 
 }

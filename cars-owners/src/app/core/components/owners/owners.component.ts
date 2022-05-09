@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { TableOwnerColumns } from 'src/app/shared/enum/table-columns';
 import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
-import { GetOwnerById, GetOwners } from '../../store/user.actions';
+import { ActivateEditMode, GetOwnerById, GetOwners } from '../../store/user.actions';
 import { UserState } from '../../store/user.state';
 
 @Component({
@@ -34,7 +34,8 @@ export class OwnersComponent implements OnInit {
   }
 
   onEdit(): void {
-    console.log('edit')
+    this.store.dispatch(new ActivateEditMode(true))
+    console.log(this.ownerId);
   }
   onRemove(): void {
     console.log('remove')

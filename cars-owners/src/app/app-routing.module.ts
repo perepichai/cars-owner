@@ -6,9 +6,12 @@ import { OwnersComponent } from './core/components/owners/owners.component';
 const routes: Routes = [
   { path: '', component: OwnersComponent },
   {
-    path: 'owner',
+    path: 'owner/create',
     component: OwnerComponent,
-    // loadChildren: () => import('./core/modules/details/details.module').then(m => m.DetailsModule),
+  },
+  {
+    path: 'owner/edit/:id',
+    component: OwnerComponent,
   },
 ];
 

@@ -1,8 +1,8 @@
 <div fxLayout='row' fxLayoutAlign='start space-between'>
-	<button mat-raised-button class="btn button" [routerLink]="'owner'" routerLinkActive="active">
+	<button mat-raised-button class="btn button" [routerLink]="'owner/create'" routerLinkActive="active">
 		Добавить
 	</button>
-	<button mat-raised-button (click)="onEdit()" class="btn button" [disabled]="isDisabled">
+	<button mat-raised-button (click)="onEdit()" class="btn button" [routerLink]="['owner/edit', ownerId]" [disabled]="isDisabled">
 		Редактировать
 	</button>
 	<button mat-raised-button (click)="onRemove()" class="btn button" [disabled]="isDisabled">

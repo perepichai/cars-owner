@@ -27,3 +27,8 @@ export class CreateCar {
     public productionYear: string
   ) {}
 }
+
+export class ActivateEditMode {
+  static readonly type = '[user] activate edit Mode';
+  constructor(public payload: boolean) { }
+}

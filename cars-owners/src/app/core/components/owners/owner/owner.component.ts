@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Subject, takeUntil } from 'rxjs';
-import { CreateOwner } from 'src/app/core/store/user.actions';
+import { ActivateEditMode, CreateOwner } from 'src/app/core/store/user.actions';
+import { UserState } from 'src/app/core/store/user.state';
 import { Constants } from 'src/app/shared/constants/constants';
 import { TableCarColumns } from 'src/app/shared/enum/table-columns';
 import { CarEntity } from 'src/app/shared/models/car-entity.model';
@@ -15,6 +16,7 @@ import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
 })
 export class OwnerComponent implements OnInit {
 
+  isEditMode = false;
   columns!: string[];
   OwnerFormGroup!: FormGroup;
   CarsFormGroup!: FormGroup;
@@ -26,6 +28,8 @@ export class OwnerComponent implements OnInit {
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
+    this.isEditMode = this.store.selectSnapshot<boolean>(UserState.isEditMode);
+
     this.OwnerFormGroup = this.fb.group({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
@@ -40,6 +44,9 @@ export class OwnerComponent implements OnInit {
       });
 
     this.columns = Object.values(TableCarColumns);
+
+
+
   }
 
   private newForm(): FormGroup {
@@ -68,6 +75,8 @@ export class OwnerComponent implements OnInit {
         this.user.cars
       )
     );
+
+    this.store.dispatch(new ActivateEditMode(false))
   }
 
   onSelect(id: any): void {}
