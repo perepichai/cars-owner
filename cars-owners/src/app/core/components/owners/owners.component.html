@@ -2,6 +2,9 @@
 	<button mat-raised-button class="btn button" [routerLink]="'owner/create'" routerLinkActive="active">
 		Добавить
 	</button>
+	<button mat-raised-button (click)="onView()" class="btn button" [routerLink]="['owner', ownerId]" [disabled]="isDisabled">
+		Просмотреть
+	</button>
 	<button mat-raised-button (click)="onEdit()" class="btn button" [routerLink]="['owner/edit', ownerId]" [disabled]="isDisabled">
 		Редактировать
 	</button>

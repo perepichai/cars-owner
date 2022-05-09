@@ -10,6 +10,10 @@ const routes: Routes = [
     component: OwnerComponent,
   },
   {
+    path: 'owner/:id',
+    component: OwnerComponent,
+  },
+  {
     path: 'owner/edit/:id',
     component: OwnerComponent,
   },
