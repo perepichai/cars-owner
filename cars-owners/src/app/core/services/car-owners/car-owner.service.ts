@@ -54,9 +54,19 @@ export class CarOwnerService implements ICarOwnersService {
     
   }
   editOwner(aOwner: OwnerEntity): Observable<OwnerEntity> {
-    throw new Error('Method not implemented.');
+    return this.http.put<OwnerEntity>(`${this.ownersUrl}${aOwner.id}`, aOwner).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        return throwError(() => error);
+      })
+    );
   }
   deleteOwner(aOwnerId: number): Observable<OwnerEntity[]> {
-    throw new Error('Method not implemented.');
+    return this.http.delete<OwnerEntity[]>(`${this.ownersUrl}${aOwnerId}`).pipe(
+      retry(2),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
+      })
+    );
   }
 }

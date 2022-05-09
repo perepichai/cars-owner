@@ -3,12 +3,13 @@ import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { CarOwnerService } from '../services/car-owners/car-owner.service';
 import { Observable, tap } from 'rxjs';
-import { ActivateEditMode, CreateOwner, GetOwnerById, GetOwners } from './user.actions';
+import { ActivateEditMode, ActivateViewMode, CreateOwner, DeleteOwner, EditOwner, GetOwnerById, GetOwners } from './user.actions';
 
 export interface UserStateModel {
   owners: OwnerEntity[];
   owner: OwnerEntity,
-  isEditMode: boolean
+  isEditMode: boolean,
+  isViewMode: boolean;
 }
 
 @State<UserStateModel>({
@@ -22,7 +23,8 @@ export interface UserStateModel {
       cars: [],
       carsQuantity: 0,
     },
-    isEditMode: false
+    isEditMode: false,
+    isViewMode: false
   },
 })
 @Injectable()
@@ -38,6 +40,10 @@ export class UserState {
   @Selector()
   static isEditMode(state: UserStateModel): boolean {
     return state.isEditMode;
+  }
+  @Selector()
+  static isViewMode(state: UserStateModel): boolean {
+    return state.isViewMode;
   }
 
   constructor(private carOwnerService: CarOwnerService) {}
@@ -66,6 +72,18 @@ export class UserState {
     );
   }
 
+  @Action(EditOwner)
+  editOwner(
+    { patchState }: StateContext<UserStateModel>,
+    { owner }: EditOwner
+  ): Observable<object> {
+    return this.carOwnerService.editOwner(owner).pipe(
+      tap((owner: OwnerEntity) => {
+        return patchState({ owner: owner });
+      })
+    );
+  }
+
   @Action(CreateOwner)
   createOwner(
     { patchState, dispatch }: StateContext<UserStateModel>,
@@ -81,9 +99,26 @@ export class UserState {
       );
   }
 
+  @Action(DeleteOwner)
+  deleteOwner(
+    { patchState }: StateContext<UserStateModel>,
+    { id }: DeleteOwner
+  ): Observable<object> {
+    return this.carOwnerService.deleteOwner(id).pipe(
+      tap((owners: OwnerEntity[]) => {
+        return patchState({ owners: owners });
+      })
+    );
+  }
+
   @Action(ActivateEditMode)
   activateEditMode({ patchState }: StateContext<UserStateModel>, { payload }: ActivateEditMode): void {
     patchState({ isEditMode: payload });
+  }
+
+  @Action(ActivateViewMode)
+  activateViewMode({ patchState }: StateContext<UserStateModel>, { payload }: ActivateViewMode): void {
+    patchState({ isViewMode: payload });
   }
 
 }

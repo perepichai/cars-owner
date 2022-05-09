@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { TableOwnerColumns } from 'src/app/shared/enum/table-columns';
 import { OwnerEntity } from 'src/app/shared/models/owner-entity.model';
-import { ActivateEditMode, GetOwnerById, GetOwners } from '../../store/user.actions';
+import { ActivateEditMode, ActivateViewMode, DeleteOwner, GetOwnerById, GetOwners } from '../../store/user.actions';
 import { UserState } from '../../store/user.state';
 
 @Component({
@@ -15,7 +15,7 @@ export class OwnersComponent implements OnInit {
   @Select(UserState.owners)
   owners$!: Observable<OwnerEntity[]>;
   owners!: OwnerEntity[];
-  @Select(UserState.owners)
+  @Select(UserState.owner)
   owner$!: Observable<OwnerEntity>;
   ownerId!: number;
   isDisabled: boolean = true;
@@ -35,18 +35,18 @@ export class OwnersComponent implements OnInit {
 
   onEdit(): void {
     this.store.dispatch(new ActivateEditMode(true))
-    console.log(this.ownerId);
+  }
+  onView(): void {
+    this.store.dispatch(new ActivateViewMode(true))
   }
   onRemove(): void {
-    console.log('remove')
+    this.store.dispatch(new DeleteOwner(this.ownerId));
+    this.store.dispatch(new GetOwners());
   }
   onSelect(id: number): void {
     this.isDisabled = false;
     this.ownerId = id;
-    console.log('asdads ' + this.ownerId)
-  }
-  get(): void {
-    this.store.dispatch(new GetOwnerById(1));
+    console.log('owner ID ' + this.ownerId)
   }
 
 }

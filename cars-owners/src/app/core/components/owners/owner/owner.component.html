@@ -53,7 +53,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div>
-                                    <button class="del-button" (click)="onRemove(i)"><mat-icon>delete_forever</mat-icon></button>
+                                    <button class="del-button" [disabled]="isViewMode" (click)="onRemove(i)"><mat-icon>delete_forever</mat-icon></button>
                                 </div>
                             </div>
                         </ng-container>
@@ -73,10 +73,10 @@
         <mat-divider></mat-divider>
         <div fxLayout='row' fxLayoutAlign='start space-between' class="btn-footer">
             <button mat-raised-button class="btn button" [routerLink]="''" routerLinkActive="active"
-                [disabled]="!(OwnerFormGroup.valid && cars.length)" (click)="onCreate()">
+                [disabled]="!(OwnerFormGroup.valid && cars.length)" (click)="onSave()">
                 Сохранить
             </button>
-            <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active">
+            <button mat-raised-button class="cancel button" [routerLink]="''" routerLinkActive="active" (click)="onBack()">
                 Назад
             </button>
         </div>
