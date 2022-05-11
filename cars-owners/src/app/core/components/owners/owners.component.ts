@@ -41,12 +41,10 @@ export class OwnersComponent implements OnInit {
   }
   onRemove(): void {
     this.store.dispatch(new DeleteOwner(this.ownerId));
-    this.store.dispatch(new GetOwners());
   }
   onSelect(id: number): void {
     this.isDisabled = false;
     this.ownerId = id;
-    console.log('owner ID ' + this.ownerId)
   }
 
 }

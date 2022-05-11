@@ -101,11 +101,12 @@ export class UserState {
 
   @Action(DeleteOwner)
   deleteOwner(
-    { patchState }: StateContext<UserStateModel>,
+    { patchState, dispatch }: StateContext<UserStateModel>,
     { id }: DeleteOwner
   ): Observable<object> {
     return this.carOwnerService.deleteOwner(id).pipe(
       tap((owners: OwnerEntity[]) => {
+        dispatch(new GetOwners());
         return patchState({ owners: owners });
       })
     );

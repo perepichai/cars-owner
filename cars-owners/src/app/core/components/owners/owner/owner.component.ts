@@ -57,10 +57,9 @@ export class OwnerComponent implements OnInit, OnDestroy {
       this.owner$
         .pipe(
           filter((owner: OwnerEntity) => !!owner),
-          take(1))
+          takeUntil(this.destroy$))
         .subscribe((owner: OwnerEntity) => {
-          this.user = owner;
-          this.setUser(this.user);
+          this.setUser(owner);
         });
 
     }
@@ -77,9 +76,10 @@ export class OwnerComponent implements OnInit, OnDestroy {
   }
 
   private setUser(user: OwnerEntity): void {
+    this.cars.clear();
+    this.OwnerFormGroup.reset();
     this.OwnerFormGroup.patchValue(user);
-    this.user.cars.forEach((car: CarEntity) => {
-      console.log(car);
+    user.cars.forEach((car: CarEntity) => {
       let carForm = this.newForm();
       carForm.patchValue(car);
       this.cars.push(carForm);
@@ -134,9 +134,11 @@ export class OwnerComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ActivateViewMode(false));
     this.store.dispatch(new ActivateEditMode(false));
     this.OwnerFormGroup.reset();
+    this.cars.reset();
   }
 
   ngOnDestroy(): void {
+    this.destroy$.unsubscribe();
   }
   
 }
